@@ -1,231 +1,312 @@
-let users = JSON.parse(localStorage.getItem("users")) || [];
+// Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-function registerUser(){
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const fullname =
-        document.getElementById("fullname").value;
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAp7cXdiuLsHEL0XdBZZiYW5j9yvnGmlb8",
+  authDomain: "capital-bank-42524.firebaseapp.com",
+  projectId: "capital-bank-42524",
+  storageBucket: "capital-bank-42524.firebasestorage.app",
+  messagingSenderId: "622953995653",
+  appId: "1:622953995653:web:64c7503cc459019662b8ec"
+};
 
-    const email =
-        document.getElementById("email").value;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    const password =
-        document.getElementById("password").value;
+// Register User
+window.registerUser = async function () {
+
+  const fullname =
+    document.getElementById("fullname").value;
+
+  const email =
+    document.getElementById("email").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  try {
+
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
     const user = {
-        fullname,
-        email,
-        password,
-        balance:23000000,
-        savings:15000000,
-        transactions:[
-            {
-                type:"Account Created",
-                amount:23000000,
-                date:new Date().toLocaleString()
-            }
-        ]
+      fullname,
+      email,
+      balance: 23000000,
+      savings: 15000000,
+      transactions: [
+        {
+          type: "Account Created",
+          amount: 23000000,
+          date: new Date().toLocaleString()
+        }
+      ]
     };
+
+    let users =
+      JSON.parse(localStorage.getItem("users"))
+      || [];
 
     users.push(user);
 
     localStorage.setItem(
-        "users",
-        JSON.stringify(users)
+      "users",
+      JSON.stringify(users)
     );
 
     alert("Registration Successful");
 
-    window.location.href="login.html";
-}
+    window.location.href = "login.html";
 
-function loginUser(){
+  } catch (error) {
 
-    const email =
-        document.getElementById("loginEmail").value;
+    alert(error.message);
 
-    const password =
-        document.getElementById("loginPassword").value;
+  }
+};
+
+// Login User
+window.loginUser = async function () {
+
+  const email =
+    document.getElementById("loginEmail").value;
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  try {
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    let users =
+      JSON.parse(localStorage.getItem("users"))
+      || [];
 
     const found =
-        users.find(
-            user =>
-            user.email===email &&
-            user.password===password
-        );
+      users.find(
+        user => user.email === email
+      );
 
-    if(found){
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(found)
+    );
 
-        localStorage.setItem(
-            "currentUser",
-            JSON.stringify(found)
-        );
+    window.location.href =
+      "dashboard.html";
 
-        window.location.href="dashboard.html";
+  } catch (error) {
 
-    }else{
-        alert("Invalid Login");
-    }
-}
+    alert("Invalid Login");
 
-function loadDashboard(){
+  }
+};
 
-    let currentUser =
-        JSON.parse(
-            localStorage.getItem("currentUser")
-        );
+// Dashboard
+window.loadDashboard = function () {
 
-    if(!currentUser){
-        location.href="login.html";
-        return;
-    }
+  let currentUser =
+    JSON.parse(
+      localStorage.getItem("currentUser")
+    );
 
-    document.getElementById("username").innerText =
-        currentUser.fullname;
+  if (!currentUser) {
 
-    document.getElementById("balance").innerText =
-        "₦" +
-        currentUser.balance.toLocaleString();
+    location.href = "login.html";
+    return;
 
-    document.getElementById("savings").innerText =
-        "₦" +
-        currentUser.savings.toLocaleString();
+  }
 
-    let history =
-        document.getElementById("history");
+  document.getElementById("username")
+    .innerText =
+    currentUser.fullname;
 
-    history.innerHTML="";
+  document.getElementById("balance")
+    .innerText =
+    "₦" +
+    currentUser.balance.toLocaleString();
 
-    currentUser.transactions.forEach(t=>{
+  document.getElementById("savings")
+    .innerText =
+    "₦" +
+    currentUser.savings.toLocaleString();
 
-        history.innerHTML +=
+  let history =
+    document.getElementById("history");
+
+  if (history) {
+
+    history.innerHTML = "";
+
+    currentUser.transactions.forEach(t => {
+
+      history.innerHTML +=
         `<li>${t.type} - ₦${t.amount.toLocaleString()} (${t.date})</li>`;
 
     });
-}
 
-function transferMoney(){
+  }
+};
 
-    let receiver =
-        document.getElementById("receiver").value;
+// Transfer
+window.transferMoney = function () {
 
-    let amount =
-        Number(
-            document.getElementById("amount").value
-        );
+  let receiver =
+    document.getElementById("receiver").value;
 
-    let currentUser =
-        JSON.parse(
-            localStorage.getItem("currentUser")
-        );
-
-    if(amount > currentUser.balance){
-        alert("Insufficient Funds");
-        return;
-    }
-
-    currentUser.balance -= amount;
-
-    currentUser.transactions.push({
-        type:"Transfer To " + receiver,
-        amount:amount,
-        date:new Date().toLocaleString()
-    });
-
-    localStorage.setItem(
-        "currentUser",
-        JSON.stringify(currentUser)
+  let amount =
+    Number(
+      document.getElementById("amount").value
     );
 
-    let allUsers =
-        JSON.parse(localStorage.getItem("users"));
-
-    let index =
-        allUsers.findIndex(
-            u=>u.email===currentUser.email
-        );
-
-    allUsers[index] = currentUser;
-
-    localStorage.setItem(
-        "users",
-        JSON.stringify(allUsers)
+  let currentUser =
+    JSON.parse(
+      localStorage.getItem("currentUser")
     );
 
-    alert("Transfer Successful");
+  if (amount > currentUser.balance) {
 
-    location.reload();
-}
+    alert("Insufficient Funds");
+    return;
 
-function logout(){
+  }
 
-    localStorage.removeItem(
-        "currentUser"
+  currentUser.balance -= amount;
+
+  currentUser.transactions.push({
+    type: "Transfer To " + receiver,
+    amount: amount,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify(currentUser)
+  );
+
+  let allUsers =
+    JSON.parse(
+      localStorage.getItem("users")
     );
 
-    location.href="login.html";
-}
+  let index =
+    allUsers.findIndex(
+      u => u.email === currentUser.email
+    );
 
-function loadAdmin(){
+  allUsers[index] = currentUser;
 
-    let allUsers =
-        JSON.parse(localStorage.getItem("users"))
-        || [];
+  localStorage.setItem(
+    "users",
+    JSON.stringify(allUsers)
+  );
 
-    document.getElementById("totalUsers")
-        .innerText = allUsers.length;
+  alert("Transfer Successful");
 
-    let total = 0;
+  location.reload();
 
-    allUsers.forEach(user=>{
-        total += user.balance;
-    });
+};
 
-    document.getElementById("totalFunds")
-        .innerText =
-        "₦" + total.toLocaleString();
-}
+// Logout
+window.logout = async function () {
 
-function askAI(){
+  await signOut(auth);
 
-    const input =
-        document.getElementById("aiInput")
-        .value.toLowerCase();
+  localStorage.removeItem(
+    "currentUser"
+  );
 
-    const output =
-        document.getElementById("aiMessage");
+  location.href = "login.html";
 
-    let currentUser =
-        JSON.parse(
-            localStorage.getItem("currentUser")
-        );
+};
 
-    if(input.includes("balance")){
+// Admin
+window.loadAdmin = function () {
 
-        output.innerText =
-        "Your available balance is ₦" +
-        currentUser.balance.toLocaleString();
+  let allUsers =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
 
-    }
+  document.getElementById("totalUsers")
+    .innerText =
+    allUsers.length;
 
-    else if(input.includes("savings")){
+  let total = 0;
 
-        output.innerText =
-        "Your savings balance is ₦" +
-        currentUser.savings.toLocaleString();
+  allUsers.forEach(user => {
 
-    }
+    total += user.balance;
 
-    else if(input.includes("transfer")){
+  });
 
-        output.innerText =
-        "Use the Transfer Money section to send funds.";
+  document.getElementById("totalFunds")
+    .innerText =
+    "₦" + total.toLocaleString();
 
-    }
+};
 
-    else{
+// AI Assistant
+window.askAI = function () {
 
-        output.innerText =
-        "I can help with balance, savings and transfers.";
+  const input =
+    document.getElementById("aiInput")
+    .value
+    .toLowerCase();
 
-    }
-}
+  const output =
+    document.getElementById("aiMessage");
+
+  let currentUser =
+    JSON.parse(
+      localStorage.getItem("currentUser")
+    );
+
+  if (input.includes("balance")) {
+
+    output.innerText =
+      "Your available balance is ₦" +
+      currentUser.balance.toLocaleString();
+
+  }
+
+  else if (input.includes("savings")) {
+
+    output.innerText =
+      "Your savings balance is ₦" +
+      currentUser.savings.toLocaleString();
+
+  }
+
+  else if (input.includes("transfer")) {
+
+    output.innerText =
+      "Use the Transfer Money section to send funds.";
+
+  }
+
+  else {
+
+    output.innerText =
+      "I can help with balance, savings and transfers.";
+
+  }
+
+};

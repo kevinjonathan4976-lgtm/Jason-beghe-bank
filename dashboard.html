@@ -9,38 +9,48 @@
 
 <body onload="loadDashboard()">
 
-<div class="container">
+<div class="dashboard-container">
 
-    <div class="logo-section">
-        <img src="logo.png" alt="Capital Bank Logo" class="logo">
-        <h1>CAPITAL BANK</h1>
-        <p>Digital Banking Platform</p>
+    <div class="top-header">
+        <img src="logo.png" class="logo" alt="Capital Bank">
+        <div>
+            <h1>Capital Bank</h1>
+            <p>Digital Banking Platform</p>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>Account Holder</h3>
+    <div class="welcome-card">
+        <h2>Welcome Back</h2>
         <p id="username"></p>
+        <span class="status">Account Status: Active</span>
     </div>
 
-    <div class="card">
-        <h3>Account Details</h3>
-        <p>Account Type: Savings</p>
-        <p>Bank: Capital Bank</p>
-        <p>Status: Active</p>
+    <div class="cards-grid">
+
+        <div class="bank-card balance-card">
+            <h3>Available Balance</h3>
+            <h1 id="balance">₦23,000,000</h1>
+        </div>
+
+        <div class="bank-card">
+            <h3>Savings Account</h3>
+            <p id="savings">₦10,000,000</p>
+        </div>
+
+        <div class="bank-card">
+            <h3>Account Number</h3>
+            <p>1029384756</p>
+        </div>
+
+        <div class="bank-card">
+            <h3>Account Type</h3>
+            <p>Savings Account</p>
+        </div>
+
     </div>
 
-    <div class="card">
-        <h3>Available Balance</h3>
-        <p id="balance"></p>
-    </div>
-
-    <div class="card">
-        <h3>Savings Account</h3>
-        <p id="savings"></p>
-    </div>
-
-    <div class="card">
-        <h3>Transfer Money</h3>
+    <div class="bank-card">
+        <h2>Quick Transfer</h2>
 
         <input
             type="text"
@@ -53,17 +63,21 @@
             placeholder="Amount">
 
         <button onclick="transferMoney()">
-            Transfer
+            Transfer Funds
         </button>
     </div>
 
-    <div class="card">
-        <h3>Transaction History</h3>
-        <ul id="history"></ul>
+    <div class="bank-card">
+        <h2>Recent Transactions</h2>
+        <ul id="history">
+            <li>Salary Credit - ₦2,000,000</li>
+            <li>Transfer Sent - ₦50,000</li>
+            <li>ATM Withdrawal - ₦20,000</li>
+        </ul>
     </div>
 
-    <div class="card">
-        <h3>Capital AI Assistant</h3>
+    <div class="bank-card">
+        <h2>Capital AI Assistant</h2>
 
         <p id="aiMessage">
             Welcome to Capital Bank. How can I help you today?
@@ -71,21 +85,40 @@
 
         <input
             type="text"
-            id="aiInput"
-            placeholder="Ask about balance, savings or transfers">
+            id="userQuestion"
+            placeholder="Ask AI anything about banking">
 
         <button onclick="askAI()">
             Ask AI
         </button>
     </div>
 
-    <button onclick="logout()">
-        Logout
-    </button>
-
 </div>
 
-<script type="module" src="app.js"></script>
+<script src="app.js"></script>
+
+<script>
+function askAI() {
+
+    let question =
+    document.getElementById("userQuestion").value.toLowerCase();
+
+    let response =
+    "Please contact customer support.";
+
+    if(question.includes("balance")){
+        response = "Your available balance is displayed above.";
+    }
+    else if(question.includes("transfer")){
+        response = "Use the Quick Transfer section to send money.";
+    }
+    else if(question.includes("savings")){
+        response = "Your savings account information is shown on the dashboard.";
+    }
+
+    document.getElementById("aiMessage").innerText = response;
+}
+</script>
 
 </body>
 </html>

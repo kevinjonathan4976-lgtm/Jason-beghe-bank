@@ -184,3 +184,48 @@ function loadAdmin(){
         .innerText =
         "₦" + total.toLocaleString();
 }
+
+function askAI(){
+
+    const input =
+        document.getElementById("aiInput")
+        .value.toLowerCase();
+
+    const output =
+        document.getElementById("aiMessage");
+
+    let currentUser =
+        JSON.parse(
+            localStorage.getItem("currentUser")
+        );
+
+    if(input.includes("balance")){
+
+        output.innerText =
+        "Your available balance is ₦" +
+        currentUser.balance.toLocaleString();
+
+    }
+
+    else if(input.includes("savings")){
+
+        output.innerText =
+        "Your savings balance is ₦" +
+        currentUser.savings.toLocaleString();
+
+    }
+
+    else if(input.includes("transfer")){
+
+        output.innerText =
+        "Use the Transfer Money section to send funds.";
+
+    }
+
+    else{
+
+        output.innerText =
+        "I can help with balance, savings and transfers.";
+
+    }
+}

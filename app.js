@@ -352,3 +352,7 @@ function transferMoney() {
 
     alert("Transfer Successful");
 }
+
+function logout() {
+    window.location.href = "login.html";
+}

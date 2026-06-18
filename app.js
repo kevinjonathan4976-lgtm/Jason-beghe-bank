@@ -310,3 +310,45 @@ window.askAI = function () {
   }
 
 };
+let transfers = [];
+
+function transferMoney() {
+
+    let receiver =
+    document.getElementById("receiver").value;
+
+    let amount =
+    document.getElementById("amount").value;
+
+    if(receiver === "" || amount === ""){
+        alert("Enter transfer details");
+        return;
+    }
+
+    let today =
+    new Date().toLocaleDateString();
+
+    transfers.push({
+        date: today,
+        receiver: receiver,
+        amount: amount
+    });
+
+    let table =
+    document.getElementById("historyTable");
+
+    table.innerHTML = "";
+
+    transfers.forEach(t => {
+
+        table.innerHTML += `
+        <tr>
+            <td>${t.date}</td>
+            <td>${t.receiver}</td>
+            <td>₦${t.amount}</td>
+        </tr>
+        `;
+    });
+
+    alert("Transfer Successful");
+}

@@ -191,12 +191,13 @@ window.transferMoney = function () {
   currentUser.balance -= amount;
 
   currentUser.transactions.push({
-    type: "Transfer To " + receiver,
-    amount: amount,
-    date: new Date().toLocaleString()
-  });
-  
-showReceipt(receiver, amount);
+   ...
+});
+
+localStorage.setItem(
+    "currentUser",
+    JSON.stringify(currentUser)
+);
   
   localStorage.setItem(
     "currentUser",

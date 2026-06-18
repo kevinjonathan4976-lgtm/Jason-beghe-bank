@@ -9,34 +9,61 @@
 
 <body onload="loadDashboard()">
 
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+    <h2>Capital Bank</h2>
+
+    <a href="#">🏠 Dashboard</a>
+    <a href="#">💸 Transfers</a>
+    <a href="#">💰 Accounts</a>
+    <a href="#">📄 Statements</a>
+    <a href="#">💳 Cards</a>
+    <a href="#">📈 Investments</a>
+    <a href="#">🔔 Notifications</a>
+    <a href="#">⚙ Settings</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+
+</div>
+
+<!-- MAIN DASHBOARD -->
+<div class="dashboard">
+
 <div class="dashboard-container">
 
     <div class="top-header">
         <img src="logo.png" class="logo" alt="Capital Bank">
+
         <div>
             <h1>Capital Bank</h1>
             <p>Digital Banking Platform</p>
         </div>
     </div>
-<div class="profile-card">
-    <div class="profile-info">
-        <h2>Welcome Back, Jason Beghie</h2>
-        <p>Last Login: 18 June 2026 • 11:45 AM</p>
-        <p>Account Number: 1029384756</p>
+
+    <!-- PROFILE SECTION -->
+    <div class="profile-card">
+
+        <div class="profile-info">
+            <h2>Welcome Back, Jason Beghie</h2>
+            <p>Last Login: 18 June 2026 • 11:45 AM</p>
+            <p>Account Number: 1029384756</p>
+        </div>
+
+        <div class="profile-actions">
+            <button>🔔 Notifications</button>
+            <button>👤 Profile</button>
+            <button onclick="logout()">🚪 Logout</button>
+        </div>
+
     </div>
 
-    <div class="profile-actions">
-        <button>🔔 Notifications</button>
-        <button>👤 Profile</button>
-        <button onclick="logout()">🚪 Logout</button>
-    </div>
-</div>
     <div class="welcome-card">
         <h2>Welcome Back</h2>
         <p id="username"></p>
         <span class="status">Account Status: Active</span>
     </div>
 
+    <!-- ACCOUNT CARDS -->
     <div class="cards-grid">
 
         <div class="bank-card balance-card">
@@ -61,7 +88,9 @@
 
     </div>
 
+    <!-- QUICK TRANSFER -->
     <div class="bank-card">
+
         <h2>Quick Transfer</h2>
 
         <input
@@ -77,27 +106,102 @@
         <button onclick="transferMoney()">
             Transfer Funds
         </button>
+
     </div>
 
+    <!-- TRANSFER HISTORY -->
     <div class="bank-card">
-    <h2>Transfer History</h2>
 
-    <table class="history-table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Receiver</th>
-                <th>Amount</th>
-            </tr>
-         </thead>
+        <h2>Transfer History</h2>
 
-        <tbody id="historyTable">
-        </tbody>
-    </table>
-</div>
+        <table class="history-table">
 
-    
- <div class="bank-card">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Receiver</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyTable">
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- CARD DISPLAY -->
+    <div class="section">
+
+        <h2>My Cards</h2>
+
+        <div class="bank-card">
+
+            <h3>CAPITAL BANK VISA</h3>
+
+            <p>**** **** **** 4582</p>
+
+            <p>Expiry: 09/28</p>
+
+        </div>
+
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="section">
+
+        <h2>Recent Activity</h2>
+
+        <ul class="activity-feed">
+
+            <li>✅ Transfer Sent - ₦50,000</li>
+            <li>✅ Salary Received - ₦2,000,000</li>
+            <li>✅ Card Payment - ₦4,500</li>
+            <li>✅ Airtime Purchase - ₦2,000</li>
+
+        </ul>
+
+    </div>
+
+    <!-- SPENDING ANALYTICS -->
+    <div class="section">
+
+        <h2>Monthly Spending</h2>
+
+        <div class="chart">
+
+            <div class="bar" style="width:70%">January</div>
+            <div class="bar" style="width:90%">February</div>
+            <div class="bar" style="width:50%">March</div>
+            <div class="bar" style="width:80%">April</div>
+
+        </div>
+
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="section">
+
+        <h2>Notifications</h2>
+
+        <div class="notification">
+            🔔 Salary payment received.
+        </div>
+
+        <div class="notification">
+            🔔 Transfer completed successfully.
+        </div>
+
+        <div class="notification">
+            🔔 New security update available.
+        </div>
+
+    </div>
+
+    <!-- AI ASSISTANT -->
+    <div class="bank-card">
+
         <h2>Capital AI Assistant</h2>
 
         <p id="aiMessage">
@@ -112,8 +216,10 @@
         <button onclick="askAI()">
             Ask AI
         </button>
+
     </div>
 
+</div>
 </div>
 
 <script src="app.js"></script>
@@ -138,6 +244,10 @@ function askAI() {
     }
 
     document.getElementById("aiMessage").innerText = response;
+}
+
+function logout() {
+    window.location.href = "login.html";
 }
 </script>
 

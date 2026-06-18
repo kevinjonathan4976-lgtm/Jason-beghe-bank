@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadDashboard()">
+
+<div class="container">
+
+    <h1>Capital Bank</h1>
+
+    <div class="card">
+        <h3>Account Holder</h3>
+        <p id="username"></p>
+    </div>
+
+    <div class="card">
+        <h3>Available Balance</h3>
+        <p id="balance"></p>
+    </div>
+
+    <div class="card">
+        <h3>Savings Account</h3>
+        <p id="savings"></p>
+    </div>
+
+    <div class="card">
+        <h3>Transfer Money</h3>
+
+        <input type="text" id="receiver" placeholder="Receiver Name">
+
+        <input type="number" id="amount" placeholder="Amount">
+
+        <button onclick="transferMoney()">
+            Transfer
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>Transaction History</h3>
+
+        <ul id="history"></ul>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -384,3 +384,108 @@ document.body.classList.add("dark-mode");
 }
 
 };
+/* ===========================
+   DARK MODE
+=========================== */
+
+window.toggleDarkMode = function () {
+
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+
+        localStorage.setItem("theme", "dark");
+
+    } else {
+
+        localStorage.setItem("theme", "light");
+
+    }
+};
+
+window.addEventListener("load", () => {
+
+    if (localStorage.getItem("theme") === "dark") {
+
+        document.body.classList.add("dark-mode");
+
+    }
+
+});
+
+
+/* ===========================
+   TRANSFER RECEIPT
+=========================== */
+
+window.showReceipt = function(receiver, amount) {
+
+    const receiptModal =
+        document.getElementById("receiptModal");
+
+    if (!receiptModal) return;
+
+    const ref =
+        "CB" + Date.now();
+
+    document.getElementById(
+        "receiptReceiver"
+    ).innerText =
+        "Receiver: " + receiver;
+
+    document.getElementById(
+        "receiptAmount"
+    ).innerText =
+        "Amount: ₦" +
+        Number(amount).toLocaleString();
+
+    document.getElementById(
+        "receiptRef"
+    ).innerText =
+        "Reference: " + ref;
+
+    receiptModal.style.display = "flex";
+};
+
+window.closeReceipt = function() {
+
+    document.getElementById(
+        "receiptModal"
+    ).style.display = "none";
+
+};
+
+
+/* ===========================
+   TRANSFER HISTORY TABLE
+=========================== */
+
+window.loadTransferHistory = function() {
+
+    let currentUser =
+        JSON.parse(
+            localStorage.getItem("currentUser")
+        );
+
+    const table =
+        document.getElementById(
+            "historyTable"
+        );
+
+    if (!table || !currentUser) return;
+
+    table.innerHTML = "";
+
+    currentUser.transactions.forEach(t => {
+
+        table.innerHTML += `
+        <tr>
+            <td>${t.date}</td>
+            <td>${t.type}</td>
+            <td>₦${t.amount.toLocaleString()}</td>
+        </tr>
+        `;
+
+    });
+
+};

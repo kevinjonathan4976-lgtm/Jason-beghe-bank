@@ -68,15 +68,24 @@
     </div>
 
     <div class="bank-card">
-        <h2>Recent Transactions</h2>
-        <ul id="history">
-            <li>Salary Credit - ₦2,000,000</li>
-            <li>Transfer Sent - ₦50,000</li>
-            <li>ATM Withdrawal - ₦20,000</li>
-        </ul>
-    </div>
+    <h2>Transfer History</h2>
 
-    <div class="bank-card">
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Receiver</th>
+                <th>Amount</th>
+            </tr>
+         </thead>
+
+        <tbody id="historyTable">
+        </tbody>
+    </table>
+</div>
+
+    
+ <div class="bank-card">
         <h2>Capital AI Assistant</h2>
 
         <p id="aiMessage">

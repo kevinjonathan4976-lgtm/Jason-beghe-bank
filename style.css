@@ -1,7 +1,10 @@
+/* =====================
+   BASE STYLES
+===================== */
 body{
     margin:0;
     font-family:Arial, sans-serif;
-    background:#f4f4f4;
+    background:#f4f7fb;
 }
 
 .container{
@@ -11,42 +14,14 @@ body{
     text-align:center;
 }
 
-.card{
-    background:white;
-    padding:20px;
-    margin:15px 0;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-input{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    box-sizing:border-box;
-}
-
-button,.btn{
-    background:#004aad;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    cursor:pointer;
-    border-radius:5px;
-    text-decoration:none;
-    display:inline-block;
-    margin:5px;
-}
-
-button:hover,.btn:hover{
-    background:#00337a;
-}
-
 footer{
     text-align:center;
     padding:20px;
 }
 
+/* =====================
+   LOGO
+===================== */
 .logo-section{
     text-align:center;
     margin-bottom:20px;
@@ -58,12 +33,30 @@ footer{
     display:block;
     margin:0 auto 10px;
 }
-body{
-    background:#f4f7fb;
-    font-family:Arial, sans-serif;
-    margin:0;
+
+/* =====================
+   CARDS
+===================== */
+.card{
+    background:white;
+    padding:20px;
+    margin:15px 0;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
+.welcome-card,
+.bank-card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom:20px;
+}
+
+/* =====================
+   DASHBOARD
+===================== */
 .dashboard-container{
     max-width:1200px;
     margin:auto;
@@ -77,56 +70,82 @@ body{
     margin-bottom:20px;
 }
 
-.logo{
-    width:70px;
-}
-
-.welcome-card,
-.bank-card{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    margin-bottom:20px;
-}
-
 .cards-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
 }
 
+/* =====================
+   FORMS (GLOBAL)
+===================== */
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    box-sizing:border-box;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+button,
+.btn{
+    background:#004aad;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    cursor:pointer;
+    border-radius:5px;
+    text-decoration:none;
+    display:inline-block;
+    margin:5px;
+}
+
+button:hover,
+.btn:hover{
+    background:#00337a;
+}
+
+/* =====================
+   BANK CARD OVERRIDES
+===================== */
+.bank-card input{
+    margin:8px 0;
+}
+
+.bank-card button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* =====================
+   SIDEBAR
+===================== */
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    margin:6px 0;
+    border-radius:8px;
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    background:#1f3c88;
+}
+
+/* =====================
+   BALANCE / HISTORY
+===================== */
 .balance-card{
     background:#003366;
     color:white;
 }
 
-input{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    margin-bottom:10px;
-    border:1px solid #ddd;
-    border-radius:8px;
-}
-
-button{
-    background:#003366;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-button:hover{
-    opacity:0.9;
-}
-
-.status{
-    color:green;
-    font-weight:bold;
-}
 .history-table{
     width:100%;
     border-collapse:collapse;
@@ -144,16 +163,20 @@ button:hover{
     background:#003366;
     color:white;
 }
+
+.status{
+    color:green;
+    font-weight:bold;
+}
+
+/* =====================
+   PREMIUM CARD
+===================== */
 .premium-card{
     max-width:450px;
     padding:30px;
     border-radius:20px;
-    background:linear-gradient(
-        135deg,
-        #0f172a,
-        #1e3a8a,
-        #2563eb
-    );
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
     color:white;
     box-shadow:0 15px 35px rgba(0,0,0,.25);
     margin-top:15px;
@@ -179,6 +202,10 @@ button:hover{
     justify-content:space-between;
     margin-top:20px;
 }
+
+/* =====================
+   DARK MODE
+===================== */
 .dark-btn{
     background:#1e3a8a;
     color:white;
@@ -211,24 +238,28 @@ button:hover{
 .dark-mode table{
     color:white;
 }
+
+/* =====================
+   RECEIPT MODAL
+===================== */
 .receipt-modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
-justify-content:center;
-align-items:center;
-z-index:9999;
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
 }
 
 .receipt-box{
-background:white;
-padding:30px;
-border-radius:15px;
-width:350px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    width:350px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }

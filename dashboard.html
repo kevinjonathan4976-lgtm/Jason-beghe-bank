@@ -444,31 +444,6 @@
 </div>
 
 <script type="module" src="app.js"></script>
-<script> 
-function askAI() {
-
-    let question =
-    document.getElementById("userQuestion").value.toLowerCase();
-
-    let response =
-    "Please contact customer support.";
-
-    if(question.includes("balance")){
-        response = "Your available balance is displayed above.";
-    }
-    else if(question.includes("transfer")){
-        response = "Use the Quick Transfer section to send money.";
-    }
-    else if(question.includes("savings")){
-        response = "Your savings account information is shown on the dashboard.";
-    }
-
-    document.getElementById("aiMessage").innerText = response;
-}
-
-function logout() {
-    window.location.href = "login.html";
-}
 
 <div id="receiptModal" class="receipt-modal">
 

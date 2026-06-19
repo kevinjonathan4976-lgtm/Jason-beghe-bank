@@ -89,53 +89,15 @@ window.registerUser = async function () {
    LOGIN
 =========================== */
 
+/* =========================== LOGIN =========================== */
 window.loginUser = async function () {
-
-  const email =
-    document.getElementById("loginEmail").value;
-
-  const password =
-    document.getElementById("loginPassword").value;
-
-  try {
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    let users =
-      JSON.parse(localStorage.getItem("users"))
-      || [];
-
-    const found =
-      users.find(
-        user => user.email === email
-      );
-
-    if (!found) {
-      alert("User data not found");
-      return;
-    }
-
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(found)
-    );
-
-    window.location.href =
-      "dashboard.html";
-
+const email = document.getElementById("loginEmail").value;
+const password = document.getElementById("loginPassword").value;
+try {
+await signInWithEmailAndPassword( auth, email, password ); const userRef = doc(db, "users", email); const userSnap = await getDoc(userRef); if (!userSnap.exists()) { alert("User data not found in Firestore"); return; } const found = userSnap.data(); localStorage.setItem( "currentUser", JSON.stringify(found) ); alert("Login Successful"); window.location.href = "dashboard.html"; 
 } catch (error) {
-
-  alert(
-    "Code: " + error.code +
-    "\nMessage: " + error.message
-  );
-
+alert( "Code: " + error.code + "\nMessage: " + error.message ); 
 }
-
 };
 
 /* ===========================

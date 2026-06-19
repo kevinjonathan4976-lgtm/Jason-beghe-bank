@@ -8,9 +8,8 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// Firebase Config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyAp7cXdiuLsHEL0XdBZZiYW5j9yvnGmlb8",
   authDomain: "capital-bank-42524.firebaseapp.com",
   projectId: "capital-bank-42524",
   storageBucket: "capital-bank-42524.firebasestorage.app",

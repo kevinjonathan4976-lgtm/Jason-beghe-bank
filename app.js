@@ -124,11 +124,14 @@ window.loginUser = async function () {
     window.location.href =
       "dashboard.html";
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+  alert(
+    "Code: " + error.code +
+    "\nMessage: " + error.message
+  );
 
-  }
+}
 
 };
 

@@ -10,7 +10,7 @@ import {
 
 // Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyAp7cXdiuLsHEL0XdBZZiYW5j9yvnGmlb8",
+  apiKey: "YOUR_API_KEY",
   authDomain: "capital-bank-42524.firebaseapp.com",
   projectId: "capital-bank-42524",
   storageBucket: "capital-bank-42524.firebasestorage.app",
@@ -22,7 +22,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Register User
+/* ===========================
+   REGISTER
+=========================== */
+
 window.registerUser = async function () {
 
   const fullname =
@@ -69,16 +72,21 @@ window.registerUser = async function () {
 
     alert("Registration Successful");
 
-    window.location.href = "login.html";
+    window.location.href =
+      "login.html";
 
   } catch (error) {
 
     alert(error.message);
 
   }
+
 };
 
-// Login User
+/* ===========================
+   LOGIN
+=========================== */
+
 window.loginUser = async function () {
 
   const email =
@@ -104,6 +112,11 @@ window.loginUser = async function () {
         user => user.email === email
       );
 
+    if (!found) {
+      alert("User data not found");
+      return;
+    }
+
     localStorage.setItem(
       "currentUser",
       JSON.stringify(found)
@@ -114,12 +127,16 @@ window.loginUser = async function () {
 
   } catch (error) {
 
-    alert("Invalid Login");
+    alert(error.message);
 
   }
+
 };
 
-// Dashboard
+/* ===========================
+   DASHBOARD
+=========================== */
+
 window.loadDashboard = function () {
 
   let currentUser =
@@ -134,21 +151,30 @@ window.loadDashboard = function () {
 
   }
 
-  document.getElementById("username")
-    .innerText =
-    currentUser.fullname;
+  const username =
+    document.getElementById("username");
 
-  document.getElementById("balance")
-    .innerText =
-    "₦" +
-    currentUser.balance.toLocaleString();
+  const balance =
+    document.getElementById("balance");
 
-  document.getElementById("savings")
-    .innerText =
-    "₦" +
-    currentUser.savings.toLocaleString();
+  const savings =
+    document.getElementById("savings");
 
-  let history =
+  if (username)
+    username.innerText =
+      currentUser.fullname;
+
+  if (balance)
+    balance.innerText =
+      "₦" +
+      currentUser.balance.toLocaleString();
+
+  if (savings)
+    savings.innerText =
+      "₦" +
+      currentUser.savings.toLocaleString();
+
+  const history =
     document.getElementById("history");
 
   if (history) {
@@ -157,15 +183,24 @@ window.loadDashboard = function () {
 
     currentUser.transactions.forEach(t => {
 
-      history.innerHTML +=
-        `<li>${t.type} - ₦${t.amount.toLocaleString()} (${t.date})</li>`;
+      history.innerHTML += `
+        <li>
+          ${t.type}
+          - ₦${t.amount.toLocaleString()}
+          (${t.date})
+        </li>
+      `;
 
     });
 
   }
+
 };
 
-// Transfer
+/* ===========================
+   TRANSFER
+=========================== */
+
 window.transferMoney = function () {
 
   let receiver =
@@ -181,6 +216,20 @@ window.transferMoney = function () {
       localStorage.getItem("currentUser")
     );
 
+  if (!currentUser) {
+
+    alert("Login Required");
+    return;
+
+  }
+
+  if (amount <= 0) {
+
+    alert("Enter Valid Amount");
+    return;
+
+  }
+
   if (amount > currentUser.balance) {
 
     alert("Insufficient Funds");
@@ -191,14 +240,13 @@ window.transferMoney = function () {
   currentUser.balance -= amount;
 
   currentUser.transactions.push({
-   ...
-});
 
-localStorage.setItem(
-    "currentUser",
-    JSON.stringify(currentUser)
-);
-  
+    type: "Transfer",
+    amount: amount,
+    date: new Date().toLocaleString()
+
+  });
+
   localStorage.setItem(
     "currentUser",
     JSON.stringify(currentUser)
@@ -207,19 +255,26 @@ localStorage.setItem(
   let allUsers =
     JSON.parse(
       localStorage.getItem("users")
-    );
+    ) || [];
 
   let index =
     allUsers.findIndex(
       u => u.email === currentUser.email
     );
 
-  allUsers[index] = currentUser;
+  if (index !== -1) {
 
-  localStorage.setItem(
-    "users",
-    JSON.stringify(allUsers)
-  );
+    allUsers[index] =
+      currentUser;
+
+    localStorage.setItem(
+      "users",
+      JSON.stringify(allUsers)
+    );
+
+  }
+
+  showReceipt(receiver, amount);
 
   alert("Transfer Successful");
 
@@ -227,7 +282,10 @@ localStorage.setItem(
 
 };
 
-// Logout
+/* ===========================
+   LOGOUT
+=========================== */
+
 window.logout = async function () {
 
   await signOut(auth);
@@ -236,11 +294,15 @@ window.logout = async function () {
     "currentUser"
   );
 
-  location.href = "login.html";
+  location.href =
+    "login.html";
 
 };
 
-// Admin
+/* ===========================
+   ADMIN
+=========================== */
+
 window.loadAdmin = function () {
 
   let allUsers =
@@ -248,8 +310,9 @@ window.loadAdmin = function () {
       localStorage.getItem("users")
     ) || [];
 
-  document.getElementById("totalUsers")
-    .innerText =
+  document.getElementById(
+    "totalUsers"
+  ).innerText =
     allUsers.length;
 
   let total = 0;
@@ -260,19 +323,24 @@ window.loadAdmin = function () {
 
   });
 
-  document.getElementById("totalFunds")
-    .innerText =
-    "₦" + total.toLocaleString();
+  document.getElementById(
+    "totalFunds"
+  ).innerText =
+    "₦" +
+    total.toLocaleString();
 
 };
 
-// AI Assistant
+/* ===========================
+   AI ASSISTANT
+=========================== */
+
 window.askAI = function () {
 
   const input =
     document.getElementById("aiInput")
-    .value
-    .toLowerCase();
+      .value
+      .toLowerCase();
 
   const output =
     document.getElementById("aiMessage");
@@ -282,30 +350,30 @@ window.askAI = function () {
       localStorage.getItem("currentUser")
     );
 
+  if (!currentUser) return;
+
   if (input.includes("balance")) {
 
     output.innerText =
       "Your available balance is ₦" +
       currentUser.balance.toLocaleString();
 
-  }
-
-  else if (input.includes("savings")) {
+  } else if (
+    input.includes("savings")
+  ) {
 
     output.innerText =
       "Your savings balance is ₦" +
       currentUser.savings.toLocaleString();
 
-  }
-
-  else if (input.includes("transfer")) {
+  } else if (
+    input.includes("transfer")
+  ) {
 
     output.innerText =
       "Use the Transfer Money section to send funds.";
 
-  }
-
-  else {
+  } else {
 
     output.innerText =
       "I can help with balance, savings and transfers.";
@@ -313,206 +381,134 @@ window.askAI = function () {
   }
 
 };
-let transfers = [];
 
-{
-  
-
-function transferMoney(){
-
-let receiver =
-document.getElementById("receiver").value;
-
-let amount =
-document.getElementById("amount").value;
-
-let ref =
-"CB" + Date.now();
-
-document.getElementById(
-"receiptReceiver"
-).innerHTML =
-"Receiver: " + receiver;
-
-document.getElementById(
-"receiptAmount"
-).innerHTML =
-"Amount: ₦" + amount;
-
-document.getElementById(
-"receiptRef"
-).innerHTML =
-"Reference: " + ref;
-
-document.getElementById(
-"receiptModal"
-).style.display="flex";
-
-}
-    table.innerHTML = "";
-
-    transfers.forEach(t => {
-
-        table.innerHTML += `
-        <tr>
-            <td>${t.date}</td>
-            <td>${t.receiver}</td>
-            <td>₦${t.amount}</td>
-        </tr>
-        `;
-    });
-
-    alert("Transfer Successful");
-}
-
-function logout() {
-    window.location.href = "login.html";
-}
-function toggleDarkMode(){
-
-document.body.classList.toggle("dark-mode");
-
-if(document.body.classList.contains("dark-mode")){
-localStorage.setItem("theme","dark");
-}else{
-localStorage.setItem("theme","light");
-}
-
-}
-
-window.onload=function(){
-
-if(localStorage.getItem("theme")==="dark"){
-document.body.classList.add("dark-mode");
-}
-
-};
 /* ===========================
    DARK MODE
 =========================== */
 
-window.toggleDarkMode = function () {
+window.toggleDarkMode =
+  function () {
 
-    document.body.classList.toggle("dark-mode");
+    document.body.classList.toggle(
+      "dark-mode"
+    );
 
-    if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem(
+      "theme",
+      document.body.classList.contains(
+        "dark-mode"
+      )
+        ? "dark"
+        : "light"
+    );
 
-        localStorage.setItem("theme", "dark");
+  };
 
-    } else {
+window.addEventListener(
+  "load",
+  () => {
 
-        localStorage.setItem("theme", "light");
+    if (
+      localStorage.getItem("theme")
+      === "dark"
+    ) {
+
+      document.body.classList.add(
+        "dark-mode"
+      );
 
     }
-};
 
-window.addEventListener("load", () => {
-
-    if (localStorage.getItem("theme") === "dark") {
-
-        document.body.classList.add("dark-mode");
-
-    }
-
-});
-
+  }
+);
 
 /* ===========================
-   TRANSFER RECEIPT
+   RECEIPT
 =========================== */
 
-window.showReceipt = function(receiver, amount) {
+window.showReceipt =
+  function (receiver, amount) {
 
-    const receiptModal =
-        document.getElementById("receiptModal");
+    const modal =
+      document.getElementById(
+        "receiptModal"
+      );
 
-    if (!receiptModal) return;
+    if (!modal) return;
 
     const ref =
-        "CB" + Date.now();
+      "CB" + Date.now();
 
     document.getElementById(
-        "receiptReceiver"
+      "receiptReceiver"
     ).innerText =
-        "Receiver: " + receiver;
+      "Receiver: " + receiver;
 
     document.getElementById(
-        "receiptAmount"
+      "receiptAmount"
     ).innerText =
-        "Amount: ₦" +
-        Number(amount).toLocaleString();
+      "Amount: ₦" +
+      Number(amount).toLocaleString();
 
     document.getElementById(
-        "receiptRef"
+      "receiptRef"
     ).innerText =
-        "Reference: " + ref;
+      "Reference: " + ref;
 
-    receiptModal.style.display = "flex";
-};
+    modal.style.display =
+      "flex";
 
-window.closeReceipt = function() {
+  };
+
+window.closeReceipt =
+  function () {
 
     document.getElementById(
-        "receiptModal"
-    ).style.display = "none";
+      "receiptModal"
+    ).style.display =
+      "none";
 
-};
-
+  };
 
 /* ===========================
-   TRANSFER HISTORY TABLE
+   TRANSFER HISTORY
 =========================== */
 
-window.loadTransferHistory = function() {
+window.loadTransferHistory =
+  function () {
 
     let currentUser =
-        JSON.parse(
-            localStorage.getItem("currentUser")
-        );
+      JSON.parse(
+        localStorage.getItem(
+          "currentUser"
+        )
+      );
 
     const table =
-        document.getElementById(
-            "historyTable"
-        );
+      document.getElementById(
+        "historyTable"
+      );
 
-    if (!table || !currentUser) return;
+    if (
+      !table ||
+      !currentUser
+    )
+      return;
 
     table.innerHTML = "";
 
-    currentUser.transactions.forEach(t => {
+    currentUser.transactions.forEach(
+      t => {
 
         table.innerHTML += `
         <tr>
-            <td>${t.date}</td>
-            <td>${t.type}</td>
-            <td>₦${t.amount.toLocaleString()}</td>
+          <td>${t.date}</td>
+          <td>${t.type}</td>
+          <td>₦${t.amount.toLocaleString()}</td>
         </tr>
-        `;
+      `;
 
-    });
+      }
+    );
 
-};
-
-window.showReceipt = function(receiver, amount){
-
-    const ref = "CB" + Date.now();
-
-    document.getElementById("receiptReceiver").innerText =
-        "Receiver: " + receiver;
-
-    document.getElementById("receiptAmount").innerText =
-        "Amount: ₦" + amount.toLocaleString();
-
-    document.getElementById("receiptRef").innerText =
-        "Reference: " + ref;
-
-    document.getElementById("receiptModal").style.display =
-        "flex";
-};
-
-window.closeReceipt = function(){
-
-    document.getElementById("receiptModal").style.display =
-        "none";
-
-};
+  };

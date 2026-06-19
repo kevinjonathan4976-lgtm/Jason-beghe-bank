@@ -165,24 +165,35 @@
     
 <!-- QUICK TRANSFER -->
 <div class="bank-card">
-        <h2>Quick Transfer</h2>
 
-        <input
-            type="text"
-            id="receiver"
-            placeholder="Receiver Name">
+    <h2>Fund Transfer</h2>
 
-        <input
-            type="number"
-            id="amount"
-            placeholder="Amount">
+    <input type="text"
+           id="receiver"
+           placeholder="Recipient Name">
 
-        <button onclick="transferMoney()">
-            Transfer Funds
-        </button>
+    <input type="text"
+           id="accountNumber"
+           placeholder="Account Number">
 
-    </div>
+    <input type="text"
+           id="bankName"
+           placeholder="Bank Name">
 
+    <input type="number"
+           id="amount"
+           placeholder="Amount">
+
+    <input type="text"
+           id="narration"
+           placeholder="Narration">
+
+    <button onclick="transferMoney()">
+        Transfer Funds
+    </button>
+
+</div>
+    
     <!-- TRANSFER HISTORY -->
     <div class="bank-card">
 

@@ -47,6 +47,23 @@ window.registerUser = async function () {
       password
     );
 
+await setDoc(
+  doc(db, "Users", email),
+  {
+    fullname: fullname,
+    email: email,
+    balance: 23000000,
+    savings: 15000000,
+    transactions: [
+      {
+        type: "Account Created",
+        amount: 23000000,
+        date: new Date().toLocaleString()
+      }
+    ]
+  }
+);
+    
     const user = {
       fullname,
       email,

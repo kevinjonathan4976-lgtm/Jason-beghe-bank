@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule Transfer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="loadDashboard()">
+
+<div class="container">
+
+  <div class="bank-card">
+
+    <h2>Schedule Transfer</h2>
+
+    <input type="text" id="schedReceiver" placeholder="Receiver Name">
+
+    <input type="number" id="schedAmount" placeholder="Amount">
+
+    <input type="date" id="schedDate">
+
+    <button onclick="scheduleTransfer()">
+      Schedule Transfer
+    </button>
+
+    <br><br>
+
+    <a href="dashboard.html" class="btn">Back To Dashboard</a>
+
+  </div>
+
+</div>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

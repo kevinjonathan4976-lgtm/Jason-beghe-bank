@@ -240,86 +240,78 @@ if (historyTable) {
 /* ===========================
    TRANSFER
 =========================== */
-
 window.transferMoney = function () {
 
   let receiver =
     document.getElementById("receiver").value;
 
+  let accountNumber =
+    document.getElementById("accountNumber").value;
+
+  let bankName =
+    document.getElementById("bankName").value;
+
   let amount =
-    Number(
-      document.getElementById("amount").value
-    );
+    Number(document.getElementById("amount").value);
+
+  let narration =
+    document.getElementById("narration").value;
 
   let currentUser =
-    JSON.parse(
-      localStorage.getItem("currentUser")
-    );
+    JSON.parse(localStorage.getItem("currentUser"));
 
   if (!currentUser) {
-
     alert("Login Required");
     return;
+  }
 
+  if (!receiver || !accountNumber || !bankName) {
+    alert("Fill all transfer details");
+    return;
   }
 
   if (amount <= 0) {
-
-    alert("Enter Valid Amount");
+    alert("Enter valid amount");
     return;
-
   }
 
   if (amount > currentUser.balance) {
-
     alert("Insufficient Funds");
     return;
-
   }
 
+  // Deduct balance
   currentUser.balance -= amount;
 
+  // Add transaction
   currentUser.transactions.push({
-
     type: "Transfer",
+    receiver: receiver,
+    accountNumber: accountNumber,
+    bankName: bankName,
+    narration: narration,
     amount: amount,
     date: new Date().toLocaleString()
-
   });
 
-  localStorage.setItem(
-    "currentUser",
-    JSON.stringify(currentUser)
-  );
+  // Save current user
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
+  // Update users list
   let allUsers =
-    JSON.parse(
-      localStorage.getItem("users")
-    ) || [];
+    JSON.parse(localStorage.getItem("users")) || [];
 
   let index =
-    allUsers.findIndex(
-      u => u.email === currentUser.email
-    );
+    allUsers.findIndex(u => u.email === currentUser.email);
 
   if (index !== -1) {
-
-    allUsers[index] =
-      currentUser;
-
-    localStorage.setItem(
-      "users",
-      JSON.stringify(allUsers)
-    );
-
+    allUsers[index] = currentUser;
+    localStorage.setItem("users", JSON.stringify(allUsers));
   }
-
-  showReceipt(receiver, amount);
 
   alert("Transfer Successful");
 
-  location.reload();
-
+  window.location.href = "dashboard.html";
 };
 
 /* ===========================

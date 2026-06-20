@@ -756,3 +756,66 @@ window.loadHistoryPage = function () {
   });
 
 };
+
+/* ===========================
+   SCHEDULE TRANSFER
+=========================== */
+
+window.scheduleTransfer = function () {
+
+  let receiver =
+    document.getElementById("schedReceiver").value;
+
+  let amount =
+    Number(document.getElementById("schedAmount").value);
+
+  let date =
+    document.getElementById("schedDate").value;
+
+  let currentUser =
+    JSON.parse(localStorage.getItem("currentUser"));
+
+  if (!currentUser) {
+    alert("Login Required");
+    return;
+  }
+
+  if (!receiver || amount <= 0 || !date) {
+    alert("Fill all fields correctly");
+    return;
+  }
+
+  let schedule = {
+    receiver,
+    amount,
+    date,
+    status: "Scheduled"
+  };
+
+  // Save to user
+  currentUser.scheduledTransfers =
+    currentUser.scheduledTransfers || [];
+
+  currentUser.scheduledTransfers.push(schedule);
+
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify(currentUser)
+  );
+
+  // update users list
+  let allUsers =
+    JSON.parse(localStorage.getItem("users")) || [];
+
+  let index =
+    allUsers.findIndex(u => u.email === currentUser.email);
+
+  if (index !== -1) {
+    allUsers[index] = currentUser;
+    localStorage.setItem("users", JSON.stringify(allUsers));
+  }
+
+  alert("Transfer Scheduled Successfully");
+
+  location.href = "dashboard.html";
+};

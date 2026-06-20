@@ -817,8 +817,6 @@ window.scheduleTransfer = function () {
 =========================== */
 
 window.loadStatement = function () {
-  window.print();
-};
 
   let currentUser =
     JSON.parse(
@@ -834,7 +832,8 @@ window.loadStatement = function () {
     "Account Holder: " + currentUser.fullname;
 
   document.getElementById("statementBalance").innerText =
-    "Current Balance: $" + currentUser.balance.toLocaleString();
+    "Current Balance: $" +
+    currentUser.balance.toLocaleString();
 
   const table =
     document.getElementById("statementTable");
@@ -853,4 +852,8 @@ window.loadStatement = function () {
 
   });
 
+};
+
+window.downloadStatement = function () {
+  window.print();
 };

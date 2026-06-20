@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deposit Funds</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="loadDashboard()">
+
+<div class="container">
+
+    <div class="bank-card">
+
+        <h2>Deposit Funds</h2>
+
+        <input
+            type="number"
+            id="depositAmount"
+            placeholder="Enter Amount">
+
+        <button onclick="depositMoney()">
+            Deposit Funds
+        </button>
+
+        <br><br>
+
+        <a href="dashboard.html" class="btn">
+            Back To Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

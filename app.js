@@ -557,3 +557,83 @@ window.loadTransferHistory =
     );
 
   };
+
+/* ===========================
+   DEPOSIT
+=========================== */
+
+window.depositMoney = function () {
+
+  let amount =
+    Number(
+      document.getElementById(
+        "depositAmount"
+      ).value
+    );
+
+  let currentUser =
+    JSON.parse(
+      localStorage.getItem(
+        "currentUser"
+      )
+    );
+
+  if (!currentUser) {
+
+    alert("Login Required");
+    return;
+
+  }
+
+  if (amount <= 0) {
+
+    alert("Enter Valid Amount");
+    return;
+
+  }
+
+  currentUser.balance += amount;
+
+  currentUser.transactions.push({
+
+    type: "Deposit",
+    amount: amount,
+    date: new Date().toLocaleString()
+
+  });
+
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify(currentUser)
+  );
+
+  let allUsers =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
+
+  let index =
+    allUsers.findIndex(
+      u => u.email === currentUser.email
+    );
+
+  if (index !== -1) {
+
+    allUsers[index] =
+      currentUser;
+
+    localStorage.setItem(
+      "users",
+      JSON.stringify(allUsers)
+    );
+
+  }
+
+  alert(
+    "Deposit Successful"
+  );
+
+  location.href =
+    "dashboard.html";
+
+};

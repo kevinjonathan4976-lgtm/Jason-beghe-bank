@@ -240,7 +240,7 @@ if (historyTable) {
 /* ===========================
    TRANSFER
 =========================== */
-window.transferMoney = function () {
+window.transferMoney = async function () {
 
   let receiver =
     document.getElementById("receiver").value;
@@ -294,6 +294,14 @@ window.transferMoney = function () {
     date: new Date().toLocaleString()
   });
 
+  await updateDoc(
+  doc(db, "Users", currentUser.email),
+  {
+    balance: currentUser.balance,
+    transactions: currentUser.transactions
+  }
+);
+  
   // Save current user
   localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
@@ -554,7 +562,7 @@ window.loadTransferHistory =
    DEPOSIT
 =========================== */
 
-window.depositMoney = function () {
+window.depositMoney = async function () {
 
   let amount =
     Number(

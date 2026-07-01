@@ -500,7 +500,9 @@ Manage Security
 </div>
 
 </div>
-<!-- CAPITAL BANK CHATBOT -->
+<!-- ===========================
+     CAPITAL BANK CHATBOT
+=========================== -->
 
 <div class="bank-card">
 
@@ -509,13 +511,24 @@ Manage Security
     <div id="chatBox" class="chat-box">
 
         <div class="bot-message">
-            Hello! Welcome to Capital Bank.<br>
-            Ask me about:
-            <br>• Balance
-            <br>• Savings
-            <br>• Transfer
-            <br>• Loan
-            <br>• Statement
+            👋 Welcome to Capital Bank!
+
+            <br><br>
+
+            I can help you with:
+
+            <br>• Check Balance
+            <br>• Savings Account
+            <br>• Fund Transfer
+            <br>• Loan Information
+            <br>• Card Services
+            <br>• Account Statement
+            <br>• Fixed Deposit
+            <br>• Security Tips
+
+            <br><br>
+
+            Type your question below.
         </div>
 
     </div>
@@ -523,47 +536,53 @@ Manage Security
     <input
         type="text"
         id="chatInput"
-        placeholder="Type your question...">
+        placeholder="Ask Capital Bank...">
 
     <button onclick="sendChat()">
-        Send
+        Send Message
     </button>
 
 </div>
 
-<!-- Footer -->
-<footer>
-
-<p>
-©️ 2026 Capital Bank.
-All Rights Reserved.
-</p>
-
-</footer>
-
 </div>
 <!-- End Dashboard -->
 
+<!-- Footer -->
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <h3>Capital Bank</h3>
+
+        <p>
+            Secure • Reliable • Trusted Digital Banking
+        </p>
+
+        <p>
+            📞 Customer Care: +234 800 000 0000
+        </p>
+
+        <p>
+            📧 support@capitalbank.com
+        </p>
+
+        <p>
+            🕒 Banking Hours: Monday – Friday | 8:00 AM – 5:00 PM
+        </p>
+
+        <p>
+            ©️ 2026 Capital Bank. All Rights Reserved.
+        </p>
+
+        <p class="footer-note">
+            Your security is our priority. Never share your password, PIN, or One-Time Password (OTP) with anyone.
+        </p>
+
+    </div>
+
+</footer>
+
 <!-- Receipt Modal -->
-<div id="receiptModal" class="receipt-modal">
-
-<div class="receipt-box">
-
-<h2>Transfer Successful</h2>
-
-<p id="receiptReceiver"></p>
-
-<p id="receiptAmount"></p>
-
-<p id="receiptRef"></p>
-
-<button onclick="closeReceipt()">
-Close
-</button>
-
-</div>
-
-</div>
 
 <!-- JavaScript -->
 <script type="module" src="app.js"></script>

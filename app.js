@@ -882,11 +882,7 @@ window.showCardDetails = function () {
 
 window.showNotifications = function () {
 
-  alert(
-    "Salary Received\n" +
-    "Transfer Successful\n" +
-    "Security Update Available"
-  );
+    window.location.href = "notifications.html";
 
 };
 
@@ -896,5 +892,44 @@ window.toggleMenu = function () {
     .getElementById("sidebar")
     .classList
     .toggle("active");
+
+};
+/* ===========================
+   LOAD NOTIFICATIONS
+=========================== */
+
+window.loadNotifications = function () {
+
+    let notifications =
+        JSON.parse(localStorage.getItem("notifications")) || [];
+
+    const list =
+        document.getElementById("notificationList");
+
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    if (notifications.length === 0) {
+
+        list.innerHTML =
+        "<li>No notifications available.</li>";
+
+        return;
+
+    }
+
+    notifications.reverse().forEach(n => {
+
+        list.innerHTML += `
+        <li>
+            <strong>${n.title}</strong><br>
+            ${n.message}<br>
+            <small>${n.date}</small>
+        </li>
+        <hr>
+        `;
+
+    });
 
 };
